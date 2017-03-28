@@ -1,0 +1,23 @@
+Function removeDuplicates(targetRange As Range)
+' OUTPUT: VARIANT ARRAY, INPUT: 1-COLUMN RANGE
+' removes duplicate values from input range and returns an array of them, doesnt touch input value
+    Dim tmpSht As Worksheet
+    Dim targetArray() As Variant
+      
+    With targetRange
+        .Parent.Select
+        .Copy
+    End With
+    Set tmpSht = ThisWorkbook.Worksheets.Add
+
+    ActiveCell.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    Selection.removeDuplicates Columns:=Array(1), Header:=xlNo
+
+    targetArray = Range(Cells(1, 1), Cells(Range("A1048576").End(xlUp).Row, 1))
+    With Application
+        .DisplayAlerts = False
+        tmpSht.Delete
+        .DisplayAlerts = True
+    End With
+    removeDuplicates = targetArray()
+End Function
