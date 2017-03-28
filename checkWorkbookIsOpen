@@ -7,5 +7,5 @@ Function checkWorkbookIsOpen(wbname) As Boolean
 
     On Error Resume Next
     Set w = Workbooks(wbname)
-    If Err.Number = 0 Then WorkbookIsOpen = True Else WorkbookIsOpen = False
+    If Err.Number = 0 Then checkWorkbookIsOpen = True Else checkWorkbookIsOpen = False
 End Function
