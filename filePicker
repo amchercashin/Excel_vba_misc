@@ -1,9 +1,11 @@
 Function filePicker()
 'OUTPUT: string array of full paths to selected files or EMPTY value if nothing was selected
 'INPUT: none
-'Check with "If Not IsArray(fileName) Then <exit sub>" to catch EMPTY output
+'Check with "If Not IsArray(filePaths) Then <exit sub>" to catch EMPTY output
+'Use getFileNamesFromPaths to extract filenames from paths
+'Use Workbooks.Open filePaths(i) to open files
 
-    Dim fileName() As String
+    Dim filePaths() As String
     Dim SI As Integer
     
     'ДИАЛОГ ВЫБОРА ФАЙЛОВ
@@ -14,11 +16,11 @@ Function filePicker()
             .InitialFileName = ThisWorkbook.Path
             .Title = "Выберите файлы. Выберите несколько нажимая CTRL или SHIFT"
             If .Show <> -1 Then Exit Function
-            ReDim fileName(1 To .SelectedItems.Count)
+            ReDim filePaths(1 To .SelectedItems.Count)
             For SI = 1 To .SelectedItems.Count
-                fileName(SI) = .SelectedItems(SI)
+                filePaths(SI) = .SelectedItems(SI)
             Next
     End With
     
-    filePicker = fileName
+    filePicker = filePaths
 End Function
