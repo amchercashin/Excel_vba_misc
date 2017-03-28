@@ -1,5 +1,5 @@
 Function filePicker()
-'OUTPUT: array of full paths to selected files or EMPTY value if nothing was selected
+'OUTPUT: string array of full paths to selected files or EMPTY value if nothing was selected
 'INPUT: none
 'Check with "If Not IsArray(fileName) Then <exit sub>" to catch EMPTY output
 
