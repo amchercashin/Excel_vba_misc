@@ -1,0 +1,16 @@
+Function getFileNamesFromPaths(filePaths)
+'OUTPUT: string array of full paths to selected files
+'INPUT: string array of file names
+'Use "If WorkbookIsOpen(fileNames(i)) = False" to ckeck if a file is already not open
+'Use "Workbooks.Open filePaths(i)" to open a file
+
+    Dim fileNames() As String
+    Dim i as Integer
+    
+    ReDim fileNames(LBound(filePaths) To UBound(filePaths))
+    For i = LBound(filePaths) To UBound(filePaths)
+        fileNames(i) = Right(filePaths(i), Len(filePaths(i)) - InStrRev(filePaths(i), "\"))
+    Next i
+    
+    getFileNamesFromPaths = fileNames()
+End Function
