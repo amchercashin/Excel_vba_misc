@@ -1,0 +1,24 @@
+Function filePicker()
+'OUTPUT: array of full paths to selected files or EMPTY value if nothing was selected
+'INPUT: none
+'Check with "If Not IsArray(fileName) Then <exit sub>" to catch EMPTY output
+
+    Dim fileName() As String
+    Dim SI As Integer
+    
+    'ДИАЛОГ ВЫБОРА ФАЙЛОВ
+     With Application.FileDialog(msoFileDialogFilePicker)
+            .AllowMultiSelect = True
+            '.FilterIndex = 1
+            .Filters.Add "Файлы Excel", "*.xlsx; *.xlsx; *.xlsm; *.xlsm; *.xlsb; *.xlsb; *.xls", 1
+            .InitialFileName = ThisWorkbook.Path
+            .Title = "Выберите файлы. Выберите несколько нажимая CTRL или SHIFT"
+            If .Show <> -1 Then Exit Function
+            ReDim fileName(1 To .SelectedItems.Count)
+            For SI = 1 To .SelectedItems.Count
+                fileName(SI) = .SelectedItems(SI)
+            Next
+    End With
+    
+    filePicker = fileName
+End Function
