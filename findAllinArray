@@ -1,4 +1,4 @@
-Function findAllinArray(targetArray() As Variant, _
+Function findAllinArray(targetArray As Variant, _
                         FindWhat As Variant, _
                         Optional LookIn As XlFindLookIn = xlValues, _
                         Optional LookAt As XlLookAt = xlWhole, _
@@ -6,21 +6,25 @@ Function findAllinArray(targetArray() As Variant, _
                         Optional MatchCase As Boolean = False, _
                         Optional BeginsWith As String = vbNullString, _
                         Optional EndsWith As String = vbNullString, _
-                        Optional BeginEndCompare As VbCompareMethod = vbTextCompare) As Variant()
+                        Optional BeginEndCompare As VbCompareMethod = vbTextCompare) As Variant
 
 'USES findAll script from findAll file, this script deals with arrays instead of Ranges
-'OUTPUT: Array of found items
+'OUTPUT: Array of found items or Empty variable
 'INPUT: Array to search in
 
     Dim tmpSht As Worksheet, rng As Range, resRng As Range, resArr As Variant
     
     Set tmpSht = ActiveWorkbook.Worksheets.Add
     
-    Set rng = Range(Cells(1, 1), Cells(UBound(targetArray()), 1))
-    rng = targetArray()
+    Set rng = Range(Cells(1, 1), Cells(UBound(targetArray), 1))
+    rng = targetArray
     Set resRng = findAll(rng, FindWhat, LookIn, LookAt, SearchOrder, MatchCase, BeginsWith, EndsWith, BeginEndCompare)
-    resRng.Copy
-    Cells(1, 2).PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
-    findAllinArray = Selection
-        
+    
+    If resRng Is Nothing Then
+        findAllinArray = Empty
+    Else
+        resRng.Copy
+        Cells(1, 2).PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+        findAllinArray = Selection
+    End If
 End Function
