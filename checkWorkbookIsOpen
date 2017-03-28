@@ -1,0 +1,11 @@
+Function checkWorkbookIsOpen(wbname) As Boolean
+'OUTPUT: True is workbook is open or False if not open
+'INPUT: string workbook name
+'Use before "Workbooks.Open filePaths(i)"
+
+    Dim w As Workbook
+
+    On Error Resume Next
+    Set w = Workbooks(wbname)
+    If Err.Number = 0 Then WorkbookIsOpen = True Else WorkbookIsOpen = False
+End Function
