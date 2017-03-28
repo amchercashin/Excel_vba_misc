@@ -8,7 +8,7 @@ Function removeDuplicates(targetRange As Range)
         .Parent.Select
         .Copy
     End With
-    Set tmpSht = ThisWorkbook.Worksheets.Add
+    Set tmpSht = ActiveWorkbook.Worksheets.Add
 
     ActiveCell.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
     Selection.removeDuplicates Columns:=Array(1), Header:=xlNo
