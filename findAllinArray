@@ -27,4 +27,10 @@ Function findAllinArray(targetArray As Variant, _
         Cells(1, 2).PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
         findAllinArray = Selection
     End If
+    
+    With Application
+        .DisplayAlerts = False
+        tmpSht.Delete
+        .DisplayAlerts = True
+    End With
 End Function
