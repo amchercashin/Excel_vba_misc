@@ -1,1 +1,1 @@
-If ActiveSheet.AutoFilterMode Then ActiveSheet.ShowAllData
+If ActiveSheet.FilterMode Then ActiveSheet.ShowAllData
