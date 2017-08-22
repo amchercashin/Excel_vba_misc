@@ -1,1 +1,7 @@
-Not Not array()
+Dim array() As Variant
+
+If (Not Not array()) <> 0 Then
+    ' Array has been initialized
+Else
+    ' Array has NOT been initialized
+End If
