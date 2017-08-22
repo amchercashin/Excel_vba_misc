@@ -5,3 +5,16 @@ If (Not Not array()) <> 0 Then
 Else
     ' Array has NOT been initialized
 End If
+
+
+
+'Consider using isEmpty on variant variable containing array:
+Dim array As Variant
+
+'set array = ActiveWorkSheet.Range("A1:A2")
+
+If IsEmpty(array) then
+    'array is not set
+Else
+    'array is set
+End if
