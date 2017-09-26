@@ -1,0 +1,9 @@
+Dim file_paths As Variant, file_names() As String, i As Integer
+
+file_paths = filePicker()
+If Not IsArray(file_paths) Then Exit Sub
+file_names = getFileNamesFromPaths(file_paths)
+
+For i = 1 To UBound(file_names)
+    If checkWorkbookIsOpen(file_names(i)) = False Then Workbooks.Open file_paths(i)
+Next
