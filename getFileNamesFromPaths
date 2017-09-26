@@ -1,6 +1,6 @@
 Function getFileNamesFromPaths(filePaths)
-'OUTPUT: string array of full paths to selected files
-'INPUT: string array of file names
+'OUTPUT: string array of file names
+'INPUT: string array of full paths to selected files
 'Use "If checkWorkbookIsOpen(fileNames(i)) = False" to ckeck if a file is already not open
 'Use "Workbooks.Open filePaths(i)" to open a file
 
