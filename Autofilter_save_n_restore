@@ -3,27 +3,26 @@ Dim currentFiltRange As String
 Sub CaptureAutoFilterState(w As Worksheet)
     w.Activate
     
-    If w.AutoFilterMode = True Then ' Capture AutoFilter settings
-        With w.AutoFilter
-            currentFiltRange = .Range.Address
-            With .Filters
-                ReDim filterArray(1 To .Count, 1 To 3)
-                For f = 1 To .Count
-                    With .Item(f)
-                        If .On Then
-                            If Not IsObject(.Criteria1) Then ' Do not work when filter is Object (ex.: colour filter)
-                                filterArray(f, 1) = .Criteria1
-                                If .Operator Then
-                                    filterArray(f, 2) = .Operator
-                                    filterArray(f, 3) = .Criteria2
-                                End If
+    ' Capture AutoFilter settings
+    With w.AutoFilter
+        currentFiltRange = .Range.Address
+        With .Filters
+            ReDim filterArray(1 To .Count, 1 To 3)
+            For f = 1 To .Count
+                With .Item(f)
+                    If .On Then
+                        If Not IsObject(.Criteria1) Then ' Do not work when filter is Object (ex.: colour filter)
+                            filterArray(f, 1) = .Criteria1
+                            If .Operator Then
+                                filterArray(f, 2) = .Operator
+                                filterArray(f, 3) = .Criteria2
                             End If
                         End If
-                    End With
-                Next f
-            End With
+                    End If
+                End With
+            Next f
         End With
-    End If
+    End With
 End Sub
 Sub yourCode()
     Dim w As Worksheet
