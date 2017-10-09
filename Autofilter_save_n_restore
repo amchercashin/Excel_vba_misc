@@ -1,0 +1,64 @@
+Dim filterArray()
+Dim currentFiltRange As String
+Sub CaptureAutoFilterState(w As Worksheet)
+    w.Activate
+    
+    If w.AutoFilterMode = True Then ' Capture AutoFilter settings
+        With w.AutoFilter
+            currentFiltRange = .Range.Address
+            With .Filters
+                ReDim filterArray(1 To .Count, 1 To 3)
+                For f = 1 To .Count
+                    With .Item(f)
+                        If .On Then
+                            If Not IsObject(.Criteria1) Then ' Do not work when filter is Object (ex.: colour filter)
+                                filterArray(f, 1) = .Criteria1
+                                If .Operator Then
+                                    filterArray(f, 2) = .Operator
+                                    filterArray(f, 3) = .Criteria2
+                                End If
+                            End If
+                        End If
+                    End With
+                Next f
+            End With
+        End With
+    End If
+End Sub
+Sub yourCode()
+    Dim w As Worksheet
+    Dim needToRestore As Boolean
+    needToRestore = False
+    Set w = ActiveSheet
+    
+    If ActiveSheet.FilterMode Then
+        needToRestore = True
+        Call CaptureAutoFilterState(w)
+        ActiveSheet.ShowAllData 'Remove AutoFilter
+    End If
+    
+    MsgBox ("aaa") ' Your code here
+    
+    
+    If needToRestore Then Call RestoreAutofilter(w)
+End Sub
+Sub RestoreAutofilter(w As Worksheet)
+    Dim col As Integer
+    
+    w.Activate
+    If Not currentFiltRange = "" Then
+        For col = 1 To UBound(filterArray(), 1)
+            If Not IsEmpty(filterArray(col, 1)) Then
+                If filterArray(col, 2) Then
+                    w.Range(currentFiltRange).AutoFilter Field:=col, _
+                    Criteria1:=filterArray(col, 1), _
+                    Operator:=filterArray(col, 2), _
+                    Criteria2:=filterArray(col, 3)
+                Else
+                    w.Range(currentFiltRange).AutoFilter Field:=col, _
+                    Criteria1:=filterArray(col, 1)
+                End If
+            End If
+        Next col
+    End If
+End Sub
