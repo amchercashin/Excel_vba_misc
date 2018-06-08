@@ -1,0 +1,22 @@
+Sub MakeAllNamesVisible()
+    Dim hidname As Name
+    For Each hidname In ActiveWorkbook.Names
+        hidname.Visible = True
+    Next hidname
+End Sub
+
+Sub DeleteAllNames()
+
+    Application.Calculation = xlCalculationManual
+    Application.ScreenUpdating = False
+    
+    Dim xName As Name
+    
+    For Each xName In Application.ActiveWorkbook.Names
+           xName.Delete
+    Next
+    
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+
+End Sub
