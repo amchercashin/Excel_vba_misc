@@ -1,0 +1,10 @@
+Function combineText(rng As Range)
+    Dim str As String
+    Dim cll As Range
+    
+    For Each cll In rng
+        str = str & cll.Value
+    Next cll
+    
+    combineText = str
+End Function
