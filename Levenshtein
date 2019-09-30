@@ -1,43 +1,45 @@
 Option Explicit
 
 Public Function Levenshtein(s1 As String, s2 As String)
+'Levenshtein edit (text) distance
+'Distance between two strings in terms of number of insertions, deletions or substitutions
 
-    Dim i As Long
-    Dim j As Long
-    Dim l1 As Long
-    Dim l2 As Long
-    Dim d() As Long
-    Dim min1 As Long
-    Dim min2 As Long
+Dim i As Long
+Dim j As Long
+Dim l1 As Long
+Dim l2 As Long
+Dim d() As Long
+Dim min1 As Long
+Dim min2 As Long
 
-    l1 = Len(s1)
-    l2 = Len(s2)
-    ReDim d(l1, l2)
-    For i = 0 To l1
-        d(i, 0) = i
-    Next
-    For j = 0 To l2
-        d(0, j) = j
-    Next
-    For i = 1 To l1
-        For j = 1 To l2
-            If Mid(s1, i, 1) = Mid(s2, j, 1) Then
-                d(i, j) = d(i - 1, j - 1)
-            Else
-                min1 = d(i - 1, j) + 1
-                min2 = d(i, j - 1) + 1
-                If min2 < min1 Then
-                    min1 = min2
-                End If
-                min2 = d(i - 1, j - 1) + 1
-                If min2 < min1 Then
-                    min1 = min2
-                End If
-                d(i, j) = min1
+l1 = Len(s1)
+l2 = Len(s2)
+ReDim d(l1, l2)
+For i = 0 To l1
+    d(i, 0) = i
+Next
+For j = 0 To l2
+    d(0, j) = j
+Next
+For i = 1 To l1
+    For j = 1 To l2
+        If Mid(s1, i, 1) = Mid(s2, j, 1) Then
+            d(i, j) = d(i - 1, j - 1)
+        Else
+            min1 = d(i - 1, j) + 1
+            min2 = d(i, j - 1) + 1
+            If min2 < min1 Then
+                min1 = min2
             End If
-        Next
+            min2 = d(i - 1, j - 1) + 1
+            If min2 < min1 Then
+                min1 = min2
+            End If
+            d(i, j) = min1
+        End If
     Next
-    Levenshtein = d(l1, l2)
+Next
+Levenshtein = d(l1, l2)
 End Function
 
 
