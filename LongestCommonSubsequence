@@ -1,0 +1,98 @@
+Option Explicit
+
+Private Function LCSmatrix(s1 As String, s2 As String)
+'Longest Common subsequence matrix
+
+Dim i As Long
+Dim j As Long
+Dim l1 As Long
+Dim l2 As Long
+Dim d() As Long
+Dim max1 As Long
+Dim max2 As Long
+
+l1 = Len(s1)
+l2 = Len(s2)
+ReDim d(l1, l2)
+'For i = 0 To l1
+'    d(i, 0) = 0
+'Next
+'For j = 0 To l2
+'    d(0, j) = 0
+'Next
+For i = 1 To l1
+    For j = 1 To l2
+        If Mid(s1, i, 1) = Mid(s2, j, 1) Then
+            d(i, j) = d(i - 1, j - 1) + 1
+        Else
+            max1 = d(i - 1, j)
+            max2 = d(i, j - 1)
+            If max1 > max2 Then
+                d(i, j) = max1
+            Else
+                d(i, j) = max2
+            End If
+        End If
+    Next
+Next
+LCSmatrix = d()
+End Function
+Public Function LCSlength(s1 As String, s2 As String)
+'Longest Common subsequence length
+Dim l1 As Long
+Dim l2 As Long
+
+l1 = Len(s1)
+l2 = Len(s2)
+
+LCSlength = LCSmatrix(s1, s2)(l1, l2)
+
+End Function
+
+
+Public Function LCSdistance(s1 As String, s2 As String)
+'Longest Common subsequence edit (text) distance
+'Distance between two strings in terms of number of insertions or deletions
+
+LCSdistance = Len(s1) + Len(s2) - 2 * Abs(LCSlength(s1, s2))
+End Function
+
+
+Public Function LCSstring(s1 As String, s2 As String)
+'Longest Common subsequence length
+Dim i As Long
+Dim j As Long
+Dim l1 As Long
+Dim l2 As Long
+Dim index As Long
+Dim LCSm() As Long
+Dim stringArray() As String
+
+l1 = Len(s1)
+l2 = Len(s2)
+
+LCSm = LCSmatrix(s1, s2)
+index = LCSm(l1, l2)
+
+i = l1
+j = l2
+
+ReDim stringArray(index)
+
+While i > 0 And j > 0
+    If Mid(s1, i, 1) = Mid(s2, j, 1) Then
+        stringArray(index) = Mid(s1, i, 1)
+        i = i - 1
+        j = j - 1
+        index = index - 1
+        
+    ElseIf LCSm(i - 1, j) > LCSm(i, j - 1) Then
+        i = i - 1
+    Else
+        j = j - 1
+    End If
+Wend
+
+LCSstring = Join(stringArray, "")
+
+End Function
