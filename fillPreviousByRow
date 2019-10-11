@@ -1,0 +1,11 @@
+Sub fillPreviousByRow()
+    For Each col In Selection.Columns
+        For Each cll In col.Cells
+            If cll.Value2 <> "" Then
+                tmp = cll.Value2
+            Else
+                cll.Value2 = tmp
+            End If
+        Next cll
+    Next col
+End Sub
